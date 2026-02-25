@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Registration</title>
+  <link rel="stylesheet" href="course.css">
+</head>
+<body>
+
+  <header class="header">
+    <h1>Course Registration</h1>
+  </header>
+
+  <main class="container">
+    <h2>Register for a Course</h2>
+
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="email" id="email" placeholder="Your Email">
+    <select id="course">
+      <option value="">Select Course</option>
+      <option value="Full Stack Web Development">Full Stack Web Development</option>
+      <option value="Artificial Intelligence">Artificial Intelligence</option>
+      <option value="UI/UX Design">UI/UX Design</option>
+    </select>
+
+    <button id="registerBtn">Register</button>
+    <p class="message" id="message"></p>
+
+    <h3>Registered Students:</h3>
+    <ul id="registrations"></ul>
+  </main>
+
+  <script>
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const courseSelect = document.getElementById('course');
+    const messageEl = document.getElementById('message');
+    const registrationsEl = document.getElementById('registrations');
+    const registerBtn = document.getElementById('registerBtn');
+
+    let registrations = [];
+
+    function updateRegistrations() {
+      registrationsEl.innerHTML = '';
+      registrations.forEach(r => {
+        const li = document.createElement('li');
+        li.textContent = `${r.name} (${r.email}) → ${r.course}`;
+        registrationsEl.appendChild(li);
+      });
+    }
+
+    registerBtn.addEventListener('click', () => {
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const course = courseSelect.value;
+
+      if (!name || !email || !course) {
+        messageEl.style.color = 'red';
+        messageEl.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      registrations.push({ name, email, course });
+      messageEl.style.color = 'green';
+      messageEl.textContent = `Successfully registered for ${course}!`;
+
+      // Clear form
+      nameInput.value = '';
+      emailInput.value = '';
+      courseSelect.value = '';
+
+      updateRegistrations();
+    });
+  </script>
+
+</body>
+</html>
